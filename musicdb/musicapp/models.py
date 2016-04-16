@@ -1,6 +1,8 @@
 from __future__ import unicode_literals
 
+from django.contrib.auth.models import User
 from django.db import models
+from datetime import date
 
 # Create your models here.
 
@@ -9,7 +11,8 @@ class Artist(models.Model):
     artistLink = models.TextField(blank=True, null=True)
     artistPictureurl = models.TextField(blank=True, null=True)
     albumCount = models.IntegerField()
-    
+    user = models.ForeignKey(User, default=1)
+    date = models.DateField(default=date.today)
     def __unicode__(self):
         return u"%s" % self.name
 
@@ -21,7 +24,8 @@ class Album(models.Model):
     releaseDate = models.DateTimeField(blank=True, null=True) # TBA albums might not have a date yet
     albumLink = models.TextField(blank=True, null=True)
     albumCoverurl = models.TextField(blank=True, null=True)
-    
+    user = models.ForeignKey(User, default=1)
+    date = models.DateField(default=date.today)
     def __unicode__(self):
         return u"%s" % self.title
         
@@ -30,31 +34,15 @@ class Track(models.Model):
     title = models.TextField(blank=False, null=False)
     duration = models.DurationField()
     trackLink = models.TextField(blank=True, null=True)
-    
+    user = models.ForeignKey(User, default=1)
+    date = models.DateField(default=date.today)
     def __unicode__(self):
         return u"%s" % self.title
         
 class Lyrics(models.Model):
     track_id = models.ForeignKey(Track)
     lyrics = models.TextField()
-    
+    user = models.ForeignKey(User, default=1)
+    date = models.DateField(default=date.today)
     def __unicode__(self):
         return u"%s" % self.lyrics
-        
-class Search(models.Model):
-    query = models.TextField()
-    
-    def __unicode__(self):
-        return u"%s" % self.lyrics
-        
-class SearchResultsArtist(models.Model):
-    search_id = models.ForeignKey(Search)
-    artist_id = models.ForeignKey(Artist)
-    
-class SearchResultsAlbum(models.Model):
-    search_id = models.ForeignKey(Search)
-    album_id = models.ForeignKey(Album)
-    
-class SearchResultsTrack(models.Model):
-    search_id = models.ForeignKey(Search)
-    track_id = models.ForeignKey(Track)
