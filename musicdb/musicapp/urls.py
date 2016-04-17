@@ -54,5 +54,13 @@ urlpatterns = [
     # Edit track details: /music/artists/#/albums/#/tracks/#/edit/
     url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/(?P<pk>\d+)/edit/$',
     UpdateView.as_view(model=Track,template_name='musicapp/form.html',form_class='track_edit')),
+
+    # Create new lyrics: /music/artists/#/albums/#/tracks/#/lyrics/create/
+    url(r'^artists/(?P<pka>\d+)/albums/(?P<pk>\d+)/tracks/(?P<pk>\d+)/lyrics/create/$',
+    CreateLyrics.as_view(),name='lyrics_create'),
+
+    # Edit lyrics details: /music/artists/#/albums/#/tracks/#/lyrics/#/edit/
+    url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/(?P<pkc>\d+)/lyrics/(?P<pk>\d+)/edit/$',
+    UpdateView.as_view(model=Lyrics,template_name='musicapp/form.html',form_class='lyrics_edit')),
     
 ]

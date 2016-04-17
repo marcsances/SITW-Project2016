@@ -14,6 +14,10 @@ class AlbumDetail(DetailView):
 class TrackDetail(DetailView):
     model=Track
     template_name='musicapp/track_detail.html'
+
+class LyricsDetail(DetailView):
+    model=Lyrics
+    template_name = 'musicapp/track_lyrics.html'
     
 class CreateArtist(CreateView):
     model=Artist
@@ -29,4 +33,8 @@ class CreateTrack(CreateView):
     model=Track
     template_name='musicapp/form.html'
     form_class=TrackForm
-    
+
+class CreateLyrics(CreateView):
+    model = Lyrics
+    template_name='musicapp/form.html'
+    form_class = LyricsForm
