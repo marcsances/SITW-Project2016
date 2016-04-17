@@ -7,6 +7,7 @@
 </h1>
 <p>
     {% if track.trackLink %}
-    <a href="{{ track.trackLink }}">Check out this track</a> {% endif %}
+    <a href="{{ track.trackLink }}">{{ track.title }}</a> {% endif %}
 </p>
+   <p>Duration: {{ track.duration }}</p>
 {% endblock %} {% block footer %}Created by {{ track.user }} on {{ track.date}} {% endblock %}

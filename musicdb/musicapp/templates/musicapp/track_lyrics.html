@@ -1,18 +1,11 @@
 {% extends "musicapp/base.html" %} {% block content %}
 <h1>
-    {{ track.}}
-    {% if user == artist.user %}
-        (<a href="{% url 'musicapp:artist_edit' artist.id %}">edit</a>)
+    {{ lyrics.track_id.title}}
+    {% if user == lyrics.user %}
+        (<a href="{% url 'musicapp:lyrics_edit' lyrics.id %}">edit</a>)
     {% endif %}
 </h1>
 <p>
-    {% if artist%}
-    <a href="{{ artist.artistLink }}">
-            {% if artist.artistPictureurl %}
-                <img src="{{ artist.artistPictureurl }}" height="300" width="300" alt="Visit artist page" />
-            {% endif %}
-            <p><small>Visit artist page</small></p>
-        </a> {% else %}
-    <a href="{{ artist.artistLink }}">Visit artist page</a> {% endif %}
+    {{ lyrics.lyrics }}
 </p>
-{% endblock %} {% block footer %}Created by {{ artist.user }} on {{ artist.date }} {% endblock %}
+{% endblock %}
