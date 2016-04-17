@@ -1,8 +1,8 @@
 {% extends "musicapp/base.html" %} {% block content %}
 <h1>
-    {{ artist.name }}
-    {% if user == artist.user %}
-        (<a href="{% url 'musicapp:album_edit' album.id %}">edit</a>)
+    {{ album.title }}
+    {% if user == album.user %}
+        (<a href="edit/">edit</a>)
     {% endif %}
 </h1>
 <p>

@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.views.generic import DetailView, ListView, UpdateView
 from views import ArtistDetail, AlbumDetail, TrackDetail, CreateArtist, CreateAlbum
 from views import CreateTrack, CreateLyrics, AlbumList, TrackList, LyricList
+from forms import *
 
 urlpatterns = [
     # List 30 first artists: /music/
@@ -61,15 +62,15 @@ urlpatterns = [
     
     # Edit artist details: /music/artists/#/edit/
     url(r'^artists/(?P<pk>\d+)/edit/$',UpdateView.as_view(model=Artist, 
-     template_name='musicapp/form.html',form_class='artist_edit'),name='artist_edit'),
+     template_name='musicapp/form.html',form_class=ArtistForm),name='artist_edit'),
      
     # Create a new album: /music/artists/#/albums/create/
     url(r'^artists/(?P<pk>\d+)/albums/create/$',CreateAlbum.as_view(),
     name='album_create'),
     
     # Edit album details: /music/artists/#/albums/#/edit/
-    url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/edit/$',UpdateView.as_view(
-        model=Album, template_name='musicapp/form.html',form_class='album_edit')),
+    url(r'^artists/(?P<pka>\d+)/albums/(?P<pk>\d+)/edit/$',UpdateView.as_view(
+        model=Album, template_name='musicapp/form.html',form_class=AlbumForm),name='album_edit'),
         
     # Create a new track: /music/artists/#/albums/#/tracks/create/
     url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/create/$',
@@ -77,7 +78,8 @@ urlpatterns = [
     
     # Edit track details: /music/artists/#/albums/#/tracks/#/edit/
     url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/(?P<pk>\d+)/edit/$',
-    UpdateView.as_view(model=Track,template_name='musicapp/form.html',form_class='track_edit')),
+    UpdateView.as_view(model=Track,template_name='musicapp/form.html',form_class=TrackForm),
+    name='track_edit'),
 
     # Create new lyrics: /music/artists/#/albums/#/tracks/#/lyrics/create/
     url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/(?P<pk>\d+)/lyrics/create/$',
@@ -85,6 +87,6 @@ urlpatterns = [
 
     # Edit lyrics details: /music/artists/#/albums/#/tracks/#/lyrics/#/edit/
     url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/(?P<pkc>\d+)/lyrics/(?P<pk>\d+)/edit/$',
-    UpdateView.as_view(model=Lyrics,template_name='musicapp/form.html',form_class='lyrics_edit')),
+    UpdateView.as_view(model=Lyrics,template_name='musicapp/form.html',form_class=LyricForm)),
     
 ]
