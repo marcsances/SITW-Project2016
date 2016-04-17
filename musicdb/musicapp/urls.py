@@ -2,10 +2,17 @@ from models import Artist, Album, Track, Lyrics
 from django.conf.urls import url,include
 from django.contrib import admin
 from django.views.generic import DetailView, ListView, UpdateView
-from views import ArtistDetail, AlbumDetail, TrackDetail, CreateArtist, CreateAlbum, CreateTrack
+from views import ArtistDetail, AlbumDetail, TrackDetail, CreateArtist, CreateAlbum, CreateTrack, CreateLyrics
+
 urlpatterns = [
     # List 30 first artists: /music/
     url(r'^$',ListView.as_view(
+        queryset=Artist.objects.all().order_by('name')[:30],
+        context_object_name='artists_list',
+        template_name='musicapp/artist_list.html'),
+        name='artist_list'
+        ),
+    url(r'^artists/$',ListView.as_view(
         queryset=Artist.objects.all().order_by('name')[:30],
         context_object_name='artists_list',
         template_name='musicapp/artist_list.html'),

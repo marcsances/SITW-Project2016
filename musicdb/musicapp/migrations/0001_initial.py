@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.TextField()),
-                ('duration', models.DurationField()),
+                ('duration', models.TimeField()),
                 ('trackCount', models.IntegerField()),
                 ('releaseDate', models.DateTimeField(blank=True, null=True)),
                 ('albumLink', models.TextField(blank=True, null=True)),
@@ -78,7 +78,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.TextField()),
-                ('duration', models.DurationField()),
+                ('duration', models.TimeField()),
                 ('trackLink', models.TextField(blank=True, null=True)),
                 ('album_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='musicapp.Album')),
             ],

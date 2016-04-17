@@ -37,4 +37,4 @@ class CreateTrack(CreateView):
 class CreateLyrics(CreateView):
     model = Lyrics
     template_name='musicapp/form.html'
-    form_class = LyricsForm
+    form_class = LyricForm
