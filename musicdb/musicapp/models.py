@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import User
 from django.db import models
 from datetime import date
+from django.core.urlresolvers import reverse
 
 # Create your models here.
 
@@ -15,6 +16,10 @@ class Artist(models.Model):
     date = models.DateField(default=date.today)
     def __unicode__(self):
         return u"%s" % self.name
+        
+    def get_absolute_url(self):
+        return reverse('musicapp:artist_detail',kwargs={'pk':self.pk})	
+  
 
 class Album(models.Model):
     artist_id = models.ForeignKey(Artist)
@@ -28,6 +33,8 @@ class Album(models.Model):
     date = models.DateField(default=date.today)
     def __unicode__(self):
         return u"%s" % self.title
+    def get_absolute_url(self):
+        return reverse('musicapp:album_detail',kwargs={'pk':self.pk,'pka':self.artist_id.pk})	
         
 class Track(models.Model):
     album_id = models.ForeignKey(Album)
@@ -38,6 +45,9 @@ class Track(models.Model):
     date = models.DateField(default=date.today)
     def __unicode__(self):
         return u"%s" % self.title
+    def get_absolute_url(self):
+        return reverse('musicapp:track_detail',kwargs={'pk':self.pk,'pka':self.album_id.pk,
+         'pkb':self.album_id.artist_id.pk})
         
 class Lyrics(models.Model):
     track_id = models.ForeignKey(Track)
@@ -46,3 +56,6 @@ class Lyrics(models.Model):
     date = models.DateField(default=date.today)
     def __unicode__(self):
         return u"%s" % self.lyrics
+    def get_absolute_url(self):
+        return reverse('musicapp:track_lyrics',kwargs={'pk':self.pk,'pka':self.track_id.album_id.pk,
+         'pkb':self.track_id.album_id.artist_id.pk,'pkt':self.track_id.pk})
