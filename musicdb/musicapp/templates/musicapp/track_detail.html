@@ -1,12 +1,12 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>
-            Title
-        </title>
-    </head>
-    <body>
-        
-    </body>
-</html>
-    
+{% extends "musicapp/base.html" %} {% block content %}
+<h1>
+    {{ track.title}}l
+    {% if user == track.user %}
+        (<a href="{% url 'musicapp:track_edit' track.id %}">edit</a>)
+    {% endif %}
+</h1>
+<p>
+    {% if track.trackLink %}
+    <a href="{{ track.trackLink }}">Check out this track</a> {% endif %}
+</p>
+{% endblock %} {% block footer %}Created by {{ track.user }} on {{ track.date}} {% endblock %}

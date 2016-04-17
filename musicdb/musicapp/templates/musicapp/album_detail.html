@@ -1,12 +1,18 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>
-            Title
-        </title>
-    </head>
-    <body>
-        
-    </body>
-</html>
-    
+{% extends "musicapp/base.html" %} {% block content %}
+<h1>
+    {{ artist.name }}
+    {% if user == artist.user %}
+        (<a href="{% url 'musicapp:album_edit' album.id %}">edit</a>)
+    {% endif %}
+</h1>
+<p>
+    {% if album.albumLink %}
+    <a href="{{ album.albumLink }}">
+            {% if album.albumCoverurl %}
+                <img src="{{ album.albumCoverurl }}" height="300" width="300" alt="Visit album" />
+            {% endif %}
+            <p><small>Visit album</small></p>
+        </a> {% else %}
+    <a href="{{ album.albumLink }}">Visit album</a> {% endif %}
+</p>
+{% endblock %} {% block footer %}Created by {{ album.artist_id.user }} on {{ album.date }} {% endblock %}

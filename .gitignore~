@@ -64,4 +64,3 @@ target/
 #VSCode
 *.VC.db
 .vscode
-.idea
