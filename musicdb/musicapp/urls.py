@@ -51,11 +51,11 @@ urlpatterns = [
     name='album_create'),
     
     # Edit album details: /music/artists/#/albums/#/edit/
-    url(r'^artists/(?P<pka>\d+)/albums/(?P<pk>\d+)$',UpdateView.as_view(
+    url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/edit/$',UpdateView.as_view(
         model=Album, template_name='musicapp/form.html',form_class='album_edit')),
         
     # Create a new track: /music/artists/#/albums/#/tracks/create/
-    url(r'^artists/(?P<pka>\d+)/albums/(?P<pk>\d+)/tracks/create/$',
+    url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/create/$',
     CreateTrack.as_view(),name='track_create'),
     
     # Edit track details: /music/artists/#/albums/#/tracks/#/edit/
@@ -63,7 +63,7 @@ urlpatterns = [
     UpdateView.as_view(model=Track,template_name='musicapp/form.html',form_class='track_edit')),
 
     # Create new lyrics: /music/artists/#/albums/#/tracks/#/lyrics/create/
-    url(r'^artists/(?P<pka>\d+)/albums/(?P<pk>\d+)/tracks/(?P<pk>\d+)/lyrics/create/$',
+    url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/(?P<pk>\d+)/lyrics/create/$',
     CreateLyrics.as_view(),name='lyrics_create'),
 
     # Edit lyrics details: /music/artists/#/albums/#/tracks/#/lyrics/#/edit/
