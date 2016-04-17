@@ -6,8 +6,8 @@ from views import ArtistDetail, AlbumDetail, TrackDetail, CreateArtist, CreateAl
 urlpatterns = [
     # List 30 first artists: /music/
     url(r'^$',ListView.as_view(
-        queryset=Track.objects.all().order_by('title')[:30],
-        context_object_name='artists',
+        queryset=Artist.objects.all().order_by('name')[:30],
+        context_object_name='artists_list',
         template_name='musicapp/artist_list.html'),
         name='artist_list'
         ),
@@ -37,7 +37,7 @@ urlpatterns = [
     
     # Edit artist details: /music/artists/#/edit/
     url(r'^artists/(?P<pk>\d+)/edit/$',UpdateView.as_view(model=Artist, 
-     template_name='musicapp/form.html',form_class='artist_edit')),
+     template_name='musicapp/form.html',form_class='artist_edit'),name='artist_edit'),
      
     # Create a new album: /music/artists/#/albums/create/
     url(r'^artists/(?P<pk>\d+)/albums/create/$',CreateAlbum.as_view(),

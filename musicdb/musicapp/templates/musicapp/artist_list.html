@@ -1,12 +1,13 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>
-            Title
-        </title>
-    </head>
-    <body>
-        
-    </body>
-</html>
-    
+{% extends "musicapp/base.html" %}
+{% block content %}
+<h1>
+    Artists
+    {% if user %}(<a href="{% url 'musicapp:artist_create' %}">add</a>){% endif %}
+</h1>
+<ul>
+    {% for artist in artists_list %}
+        <li><a href="{% url 'musicapp:artist_detail' artist.id %}">{{ artist.name }}</a></li>
+    {% empty %}<li>Nothing here, no artists registered.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
