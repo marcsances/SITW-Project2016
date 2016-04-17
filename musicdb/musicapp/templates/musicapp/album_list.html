@@ -1,0 +1,13 @@
+{% extends "musicapp/base.html" %}
+{% block content %}
+<h1>
+    Albums
+    {% if user %}(<a href="">add</a>){% endif %}
+</h1>
+<ul>
+    {% for album in album_list %}
+        <li>{{ album.title }}</li>
+    {% empty %}<li>Nothing here, no albums registered for this artist.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

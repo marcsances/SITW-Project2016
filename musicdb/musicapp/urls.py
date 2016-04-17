@@ -2,7 +2,8 @@ from models import Artist, Album, Track, Lyrics
 from django.conf.urls import url,include
 from django.contrib import admin
 from django.views.generic import DetailView, ListView, UpdateView
-from views import ArtistDetail, AlbumDetail, TrackDetail, CreateArtist, CreateAlbum, CreateTrack, CreateLyrics
+from views import ArtistDetail, AlbumDetail, TrackDetail, CreateArtist, CreateAlbum
+from views import CreateTrack, CreateLyrics, AlbumList, TrackList, LyricList
 
 urlpatterns = [
     # List 30 first artists: /music/
@@ -24,15 +25,31 @@ urlpatterns = [
      ArtistDetail.as_view(),
      name='artist_detail'),
     
+    # Show artist album list: /music/artists/#/albums/
+    url(r'^artists/(?P<pk>\d+)/albums/$',
+     AlbumList.as_view(),
+     name='album_list'),
+    
     # Show artist album details: /music/artists/#/albums/#/
     url(r'^artists/(?P<pka>\d+)/albums/(?P<pk>\d+)/$',
      AlbumDetail.as_view(),
      name='album_detail'),
     
+    # Show album track list: /music/artists/#/albums/#/tracks/#/
+    url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/$',
+     TrackList.as_view(),
+     name='track_list'),
+    
     # Show track details: /music/artists/#/albums/#/tracks/#/
     url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/(?P<pk>\d+)/$',
      TrackDetail.as_view(),
      name='track_detail'),
+  
+    # Show track lyrics list: /music/artists/#/albums/#/tracks/#/lyrics/
+    url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/(?P<pkt>\d+)/lyrics/$',
+     LyricList.as_view(),
+     name='lyrics_list'),
+    
      
     # Show track lyrics: /music/artists/#/albums/#/tracks/#/lyrics/#/
     url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/(?P<pkt>\d+)/lyrics/(?P<pk>\d+)/$',

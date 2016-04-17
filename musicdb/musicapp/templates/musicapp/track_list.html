@@ -1,0 +1,13 @@
+{% extends "musicapp/base.html" %}
+{% block content %}
+<h1>
+    Tracks
+    {% if user %}(<a href="{% url 'musicapp:artist_create' request.GET.pka request.GET.pkb %}">add</a>){% endif %}
+</h1>
+<ul>
+    {% for track in track_list %}
+        <li><a href="{% url 'musicapp:track_detail' request.GET.pka request.GET.pkb track.id %}">{{ track.name }}</a></li>
+    {% empty %}<li>Nothing here, no tracks registered for this album.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "musicapp/base.html" %} {% block content %}
+<h1>
+    Lyrics
+    {% if user %}(add){% endif %}
+</h1>
+<ul>
+    {% for lyric in lyric_list %}
+    <li>{{ lyric.user }} {{ lyric.date }}</li>
+    {% empty %}
+    <li>Nothing here, no lyrics registered for this track.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

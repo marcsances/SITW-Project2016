@@ -23,7 +23,7 @@ class Artist(models.Model):
 class Album(models.Model):
     artist_id = models.ForeignKey(Artist)
     title = models.TextField(blank=False, null=False)
-    duration = models.TimeField()
+    duration = models.IntegerField()
     trackCount = models.IntegerField()
     releaseDate = models.DateTimeField(blank=True, null=True) # TBA albums might not have a date yet
     albumLink = models.TextField(blank=True, null=True)
@@ -38,7 +38,7 @@ class Album(models.Model):
 class Track(models.Model):
     album_id = models.ForeignKey(Album)
     title = models.TextField(blank=False, null=False)
-    duration = models.TimeField()
+    duration = models.IntegerField()
     trackLink = models.TextField(blank=True, null=True)
     user = models.ForeignKey(User, default=1)
     date = models.DateField(default=date.today)
