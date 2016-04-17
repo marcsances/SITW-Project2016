@@ -2,11 +2,11 @@
 {% block content %}
 <h1>
     Albums
-    {% if user %}(<a href="">add</a>){% endif %}
+    {% if user %}(<a href="create/">add</a>){% endif %}
 </h1>
 <ul>
     {% for album in album_list %}
-        <li>{{ album.title }}</li>
+        <li><a href="{{ album.pk }}/">{{ album.title }}</a></li>
     {% empty %}<li>Nothing here, no albums registered for this artist.</li>
     {% endfor %}
 </ul>

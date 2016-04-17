@@ -1,11 +1,11 @@
 {% extends "musicapp/base.html" %} {% block content %}
 <h1>
     Lyrics
-    {% if user %}(add){% endif %}
+    {% if user %}(<a href="create/">add</a>){% endif %}
 </h1>
 <ul>
     {% for lyric in lyric_list %}
-    <li>{{ lyric.user }} {{ lyric.date }}</li>
+    <li><a href="{{lyric.pk}}/">{{ lyric.user }} {{ lyric.date }}</a></li>
     {% empty %}
     <li>Nothing here, no lyrics registered for this track.</li>
     {% endfor %}

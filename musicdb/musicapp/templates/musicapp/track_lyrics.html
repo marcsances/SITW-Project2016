@@ -2,7 +2,7 @@
 <h1>
     {{ lyrics.track_id.title}}
     {% if user == lyrics.user %}
-        (<a href="{% url 'musicapp:lyrics_edit' lyrics.id %}">edit</a>)
+        (<a href="edit/">edit</a>)
     {% endif %}
 </h1>
 <p>

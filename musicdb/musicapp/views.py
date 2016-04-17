@@ -17,7 +17,7 @@ class TrackList(ListView):
     context_object_name='track_list'
     
     def get_queryset(self):
-        self.album_id = get_object_or_404(Album, pk = self.kwargs['pk'])
+        self.album_id = get_object_or_404(Album, pk = self.kwargs['pka'])
         return Track.objects.filter(album_id=self.album_id)
         
 class LyricList(ListView):
@@ -25,7 +25,7 @@ class LyricList(ListView):
     context_object_name='lyric_list'
     
     def get_queryset(self):
-        self.track_id = get_object_or_404(Track, pk = self.kwargs['pk'])
+        self.track_id = get_object_or_404(Track, pk = self.kwargs['pkt'])
         return Lyrics.objects.filter(track_id=self.track_id)
 
 class ArtistDetail(DetailView):
