@@ -14,3 +14,8 @@ class TrackForm(ModelForm):
     class Meta:
         model = Track
         exclude = ('user','date')
+        
+class LyricForm(ModelForm):
+    class Meta:
+        model = Lyrics
+        exclude = ('user','date')

@@ -27,8 +27,8 @@ urlpatterns = [
      TrackDetail.as_view(),
      name='track_detail'),
      
-    # Show track lyrics: /music/artists/#/albums/#/tracks/#/lyrics/
-    url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/(?P<pk>\d+)/lyrics/$',
+    # Show track lyrics: /music/artists/#/albums/#/tracks/#/lyrics/#/
+    url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/(?P<pkt>\d+)/lyrics/(?P<pk>\d+)/$',
      DetailView.as_view(model=Lyrics, template_name='musicapp/track_lyrics.html'),
      name='track_lyrics'),
     
