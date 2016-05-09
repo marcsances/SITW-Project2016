@@ -1,9 +1,9 @@
 from models import Artist, Album, Track, Lyrics
 from django.conf.urls import url,include
 from django.contrib import admin
-from django.views.generic import DetailView, ListView, UpdateView
+from django.views.generic import DetailView, ListView
 from views import ArtistDetail, AlbumDetail, TrackDetail, CreateArtist, CreateAlbum
-from views import CreateTrack, CreateLyrics, AlbumList, TrackList, LyricList
+from views import CreateTrack, CreateLyrics, AlbumList, TrackList, LyricList, LoginRequiredCheckOwnerUpdateView
 from forms import *
 
 urlpatterns = [
@@ -61,7 +61,7 @@ urlpatterns = [
     url(r'^artists/create/$',CreateArtist.as_view(),name='artist_create'),
     
     # Edit artist details: /music/artists/#/edit/
-    url(r'^artists/(?P<pk>\d+)/edit/$',UpdateView.as_view(model=Artist, 
+    url(r'^artists/(?P<pk>\d+)/edit/$',LoginRequiredCheckOwnerUpdateView.as_view(model=Artist, 
      template_name='musicapp/form.html',form_class=ArtistForm),name='artist_edit'),
      
     # Create a new album: /music/artists/#/albums/create/
@@ -69,7 +69,7 @@ urlpatterns = [
     name='album_create'),
     
     # Edit album details: /music/artists/#/albums/#/edit/
-    url(r'^artists/(?P<pka>\d+)/albums/(?P<pk>\d+)/edit/$',UpdateView.as_view(
+    url(r'^artists/(?P<pka>\d+)/albums/(?P<pk>\d+)/edit/$',LoginRequiredCheckOwnerUpdateView.as_view(
         model=Album, template_name='musicapp/form.html',form_class=AlbumForm),name='album_edit'),
         
     # Create a new track: /music/artists/#/albums/#/tracks/create/
@@ -78,7 +78,7 @@ urlpatterns = [
     
     # Edit track details: /music/artists/#/albums/#/tracks/#/edit/
     url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/(?P<pk>\d+)/edit/$',
-    UpdateView.as_view(model=Track,template_name='musicapp/form.html',form_class=TrackForm),
+    LoginRequiredCheckOwnerUpdateView.as_view(model=Track,form_class=TrackForm),
     name='track_edit'),
 
     # Create new lyrics: /music/artists/#/albums/#/tracks/#/lyrics/create/
@@ -87,6 +87,6 @@ urlpatterns = [
 
     # Edit lyrics details: /music/artists/#/albums/#/tracks/#/lyrics/#/edit/
     url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/(?P<pkc>\d+)/lyrics/(?P<pk>\d+)/edit/$',
-    UpdateView.as_view(model=Lyrics,template_name='musicapp/form.html',form_class=LyricForm)),
+    LoginRequiredCheckOwnerUpdateView.as_view(model=Lyrics,form_class=LyricForm)),
     
 ]

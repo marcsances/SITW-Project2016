@@ -1,8 +1,26 @@
 from django.shortcuts import render
-from django.views.generic import DetailView, CreateView, ListView
+from django.views.generic import DetailView, CreateView, ListView, UpdateView
 from forms import *
 from models import Track, Artist, Album, Lyrics
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required 
+from django.core.exceptions import PermissionDenied
+from django.utils.decorators import method_decorator
+
+class LoginRequiredMixin(object):
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(LoginRequiredMixin,self).dispatch(*args,**kwargs)
+
+class CheckOwnerMixin(object):
+    def get_object(self,*args,**kwargs):
+        obj = super(CheckOwnerMixin,self).get_object(*args, **kwargs)
+        if (not obj.user==self.request.user):
+            raise PermissionDenied
+        return obj
+        
+class LoginRequiredCheckOwnerUpdateView(LoginRequiredMixin,CheckOwnerMixin,UpdateView):
+    template_name = 'musicapp/form.html'
 
 class AlbumList(ListView):
     template_name='musicapp/album_list.html'
@@ -44,22 +62,22 @@ class LyricsDetail(DetailView):
     model=Lyrics
     template_name = 'musicapp/track_lyrics.html'
     
-class CreateArtist(CreateView):
+class CreateArtist(LoginRequiredMixin,CreateView):
     model=Artist
     template_name='musicapp/form.html'
     form_class=ArtistForm
     
-class CreateAlbum(CreateView):
+class CreateAlbum(LoginRequiredMixin,CreateView):
     model=Album
     template_name='musicapp/form.html'
     form_class=AlbumForm
     
-class CreateTrack(CreateView):
+class CreateTrack(LoginRequiredMixin,CreateView):
     model=Track
     template_name='musicapp/form.html'
     form_class=TrackForm
 
-class CreateLyrics(CreateView):
+class CreateLyrics(LoginRequiredMixin,CreateView):
     model = Lyrics
     template_name='musicapp/form.html'
     form_class = LyricForm
