@@ -1,19 +1,21 @@
 {% extends "musicapp/base.html" %} {% block content %}
-<h1>
-    {{ artist.name }}
-    {% if user == artist.user %}
-        (<a href="{% url 'musicapp:artist_edit' artist.id %}">edit</a>)
-    {% endif %}
-</h1>
-<p>
-    {% if artist.artistLink %}
-    <a href="{{ artist.artistLink }}">
-            {% if artist.artistPictureurl %}
-                <img src="{{ artist.artistPictureurl }}" height="300" width="300" alt="Visit artist page" />
-            {% endif %}
-            <p><small>Visit artist page</small></p>
-        </a> {% else %}
-    <a href="{{ artist.artistLink }}">Visit artist page</a> {% endif %}
-</p>
-<p><a href="albums/">View artist albums</a></p>
+<div class="container-fluid">
+    <h1>
+        {{ artist.name }}
+        {% if user == artist.user %}
+            (<a href="{% url 'musicapp:artist_edit' artist.id %}">edit</a>)
+        {% endif %}
+    </h1>
+    <p>
+        {% if artist.artistLink %}
+        <a href="{{ artist.artistLink }}">
+                {% if artist.artistPictureurl %}
+                    <img src="{{ artist.artistPictureurl }}" height="300" width="300" alt="Visit artist page" />
+                {% endif %}
+                <p><small>Visit artist page</small></p>
+            </a> {% else %}
+        <a href="{{ artist.artistLink }}">Visit artist page</a> {% endif %}
+    </p>
+    <p><a href="albums/">View artist albums</a></p>
+</div>
 {% endblock %} {% block footer %}Created by {{ artist.user }} on {{ artist.date }} {% endblock %}

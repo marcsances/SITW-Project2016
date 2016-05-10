@@ -1,8 +1,12 @@
+
 {% if form.errors %}
 <p>Your username and password didn't match. Please try again.
 </p>
 {% endif %}
+<div class="container">
+    <div class="jumbotron">
 <h2>Login into MusicDB</h2>
+</div>
 <form method="post" action="{% url 'login' %}">
     <table>
         <tr>
@@ -18,4 +22,5 @@
         </tr>
     </table>
     <input type="submit" value="login" /> {% csrf_token %}
+</div>
 </form>
