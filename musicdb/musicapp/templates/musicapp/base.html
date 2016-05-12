@@ -10,19 +10,20 @@
 
 <body>
     <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
+        <ul class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">MusicDB</a>
              </div>
 
-            {% block header %} {% if user.username %}
-            <ul class="nav navbar-nav navbar-right">
+            {% block header %}<ul class="nav navbar-nav navbar-right"> {% if user.username %}
+
                 <li><a href="#"><span class="glyphicon glyphicon-user"></span>
                      {{ user.username }}</a> </li>
-                <li><a href="{% url 'logout' %}?next={{request.path}}"><span class="glyphicon glyphicon-log-out"></span>LogOut</a></li></ul>
+                <li><a href="{% url 'logout' %}?next={{request.path}}"><span class="glyphicon glyphicon-log-out"></span>LogOut</a></li>
             {% else %}
-                <li><a href="{%url 'login' %}?next={{request.path}}"><span class="glyphicon glyphicon-log-in"></span>LogIn</a></li></ul>
-            {% endif %} {% endblock %}
+                <li><a href="{%url 'login' %}?next={{request.path}}"><span class="glyphicon glyphicon-log-in"></span>LogIn</a></li>
+            {% endif %}</ul> {% endblock %}
+
          <div id="sidebar">
             {% block sidebar %}
             <ul class = "nav navbar-nav">
