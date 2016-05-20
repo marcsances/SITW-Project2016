@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.views.generic import DetailView, CreateView, ListView, UpdateView
+from django.contrib.auth.models import User
 from forms import *
 from models import Track, Artist, Album, Lyrics
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required 
+from django.http import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
 from django.utils.decorators import method_decorator
 
@@ -35,7 +37,7 @@ class TrackList(ListView):
     context_object_name='track_list'
     
     def get_queryset(self):
-        self.album_id = get_object_or_404(Album, pk = self.kwargs['pka'])
+        self.album_id = get_object_or_404(Album, pk = self.kwargs['pkb'])
         return Track.objects.filter(album_id=self.album_id)
         
 class LyricList(ListView):
@@ -67,17 +69,41 @@ class CreateArtist(LoginRequiredMixin,CreateView):
     template_name='musicapp/form.html'
     form_class=ArtistForm
     
+    def form_valid(self, form):
+        pop = form.save(commit=False)
+        pop.user = User.objects.get(username=self.request.user)
+        pop.save()
+        return HttpResponseRedirect(self.get_success_url())
+    
 class CreateAlbum(LoginRequiredMixin,CreateView):
     model=Album
     template_name='musicapp/form.html'
     form_class=AlbumForm
     
+    def form_valid(self, form):
+        pop = form.save(commit=False)
+        pop.user = User.objects.get(username=self.request.user)
+        pop.save()
+        return HttpResponseRedirect(self.get_success_url())
+    
 class CreateTrack(LoginRequiredMixin,CreateView):
     model=Track
     template_name='musicapp/form.html'
     form_class=TrackForm
+    
+    def form_valid(self, form):
+        pop = form.save(commit=False)
+        pop.user = User.objects.get(username=self.request.user)
+        pop.save()
+        return HttpResponseRedirect(self.get_success_url())
 
 class CreateLyrics(LoginRequiredMixin,CreateView):
     model = Lyrics
     template_name='musicapp/form.html'
     form_class = LyricForm
+    
+    def form_valid(self, form):
+        pop = form.save(commit=False)
+        pop.user = User.objects.get(username=self.request.user)
+        pop.save()
+        return HttpResponseRedirect(self.get_success_url())

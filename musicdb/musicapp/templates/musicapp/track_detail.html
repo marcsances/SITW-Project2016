@@ -1,6 +1,6 @@
 {% extends "musicapp/base.html" %} {% block content %}
 <h1>
-    {{ track.title}}
+    <a href="../" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span></a> {{ track.title}}
     {% if user == track.user %}
         <a href="edit/"  class="btn btn-info btn-lg">
               <span class="glyphicon glyphicon-edit"></span> Edit</a>
