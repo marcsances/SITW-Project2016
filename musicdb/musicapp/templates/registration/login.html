@@ -1,8 +1,13 @@
+{% extends "musicapp/base.html" %}
+{% block content %}
 {% if form.errors %}
 <p>Your username and password didn't match. Please try again.
 </p>
 {% endif %}
+<div class="container">
+    <div class="jumbotron">
 <h2>Login into MusicDB</h2>
+</div>
 <form method="post" action="{% url 'login' %}">
     <table>
         <tr>
@@ -17,5 +22,7 @@
             <td><input type="hidden" name="next" value="{{  next  }}" /></td>
         </tr>
     </table>
-    <input type="submit" value="login" /> {% csrf_token %}
+    <button type="submit" class="btn btn-primary bton-block" >LogIn</button> {% csrf_token %}
+</div>
 </form>
+{% endblock %}

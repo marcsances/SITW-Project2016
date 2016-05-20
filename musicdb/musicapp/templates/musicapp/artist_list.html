@@ -1,13 +1,19 @@
+
 {% extends "musicapp/base.html" %}
 {% block content %}
-<h1>
-    Artists
-    {% if user %}(<a href="{% url 'musicapp:artist_create' %}">add</a>){% endif %}
-</h1>
-<ul>
-    {% for artist in artists_list %}
-        <li><a href="{% url 'musicapp:artist_detail' artist.id %}">{{ artist.name }}</a></li>
-    {% empty %}<li>Nothing here, no artists registered.</li>
-    {% endfor %}
-</ul>
+<div class="container-fluid">
+    <h1>
+        Artists
+        {% if user %}<a href="{% url 'musicapp:artist_create' %}" class="btn btn-info btn-lg">
+              <span class="glyphicon glyphicon-plus"></span> Add
+            </a>{% endif %}
+    </h1>
+    <ul>
+        {% for artist in artists_list %}
+            <li><a href="{% url 'musicapp:artist_detail' artist.id %}">{{ artist.name }}</a></li>
+        {% empty %}<div class="alert alert-info">
+            <strong>Nothing here</strong>, no artists registered.</div>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}
