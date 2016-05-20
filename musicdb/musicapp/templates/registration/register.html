@@ -1,0 +1,18 @@
+{% extends "musicapp/base.html" %}
+{% block title %}Create an Account{% endblock %}
+{% block content %}
+    <h1>Create an Account</h1>
+    {% if user.username %}
+    <p>You're already logged in. If you want to create an account, <a href="/accounts/logout">logout first</a>.</p>
+    {% else %}
+    <p>Please fill the following form in order to register into MusicDB.</p>
+    <form method="post" action="register">{% csrf_token %}
+        <table border="0">
+            {{ form.as_table }}
+        </table>
+        <br/>
+        <input type="submit" value="Create my account" class="btn btn-primary" />
+        <input type="button" onclick="history.go(-1); return false;" value="Go back" class="btn btn-primary"></input>
+    </form>
+    {% endif %}
+{% endblock %}

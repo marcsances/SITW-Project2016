@@ -5,6 +5,13 @@
 <head>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <style type="text/css">
+    <!--
+        #content {
+            padding-left:10px;
+        }
+    -->
+    </style>
     <title>{% block title %}MusicDB{% endblock %}</title>
 </head>
 
@@ -12,12 +19,12 @@
     <nav class="navbar navbar-inverse">
         <ul class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">MusicDB</a>
+                <a class="navbar-brand" href="/music">MusicDB</a>
              </div>
 
             {% block header %}<ul class="nav navbar-nav navbar-right"> {% if user.username %}
 
-                <li><a href="#"><span class="glyphicon glyphicon-user"></span>
+                <li><a href="/accounts/profile"><span class="glyphicon glyphicon-user"></span>
                      {{ user.username }}</a> </li>
                 <li><a href="{% url 'logout' %}?next={{request.path}}"><span class="glyphicon glyphicon-log-out"></span>LogOut</a></li>
             {% else %}
@@ -28,6 +35,7 @@
             {% block sidebar %}
             <ul class = "nav navbar-nav">
                 <li class="active"><a href="/music">Home</a></li>
+                {% if user.username %}<li><a href="/admin">Admin</a></li>{% endif %}
             </ul>{% endblock %}
         </div>
       </div>

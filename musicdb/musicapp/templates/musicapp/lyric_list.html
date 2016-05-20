@@ -1,7 +1,8 @@
 {% extends "musicapp/base.html" %} {% block content %}
 <h1>
     Lyrics
-    {% if user %}(<a href="create/">add</a>){% endif %}
+    {% if user %}<a href="create/" class="btn btn-info btn-lg">
+              <span class="glyphicon glyphicon-plus"></span> Add</a>{% endif %}
 </h1>
 <ul>
     {% for lyric in lyric_list %}

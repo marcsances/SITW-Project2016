@@ -22,7 +22,10 @@
             <td><input type="hidden" name="next" value="{{  next  }}" /></td>
         </tr>
     </table>
-    <button type="submit" class="btn btn-primary bton-block" >LogIn</button> {% csrf_token %}
+    <br/>
+    <button type="submit" class="btn btn-primary" ><span class="glyphicon glyphicon-ok"></span> Login</button>
+    <a href="register" class="btn btn-primary" ><span class="glyphicon glyphicon-edit"></span> Register</a>
+     {% csrf_token %}
 </div>
 </form>
 {% endblock %}

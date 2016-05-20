@@ -3,7 +3,8 @@
     <h1>
         {{ artist.name }}
         {% if user == artist.user %}
-            (<a href="{% url 'musicapp:artist_edit' artist.id %}">edit</a>)
+            <a href="{% url 'musicapp:artist_edit' artist.id %}" class="btn btn-info btn-lg">
+              <span class="glyphicon glyphicon-edit"></span> Edit</a>
         {% endif %}
     </h1>
     <p>
