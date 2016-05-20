@@ -20,7 +20,7 @@
             document.write('<input type="hidden" id="id_album_id" name="album_id" value="' + ur + '"/>')
         </script>
         <tr>
-            <td><label for="title">Track name: </label></td>
+            <td><label for="title">Track name<span class="mandatory">*</span>: </label></td>
             <td><input type="text" id="id_title" name="title" value="{% if form.trackLink.value %}{{ form.title.value }}{% endif %}" /></td>
         </tr>
         <tr>
@@ -35,5 +35,6 @@
             <td><input type="submit" value="Submit" class="btn btn-primary" />&nbsp;<input type="button" value="Cancel" class="btn btn-primary" onclick="history.go(-1); return false;" /></p></td>
         </tr>
     </table>
+    <p><small><span class="mandatory">*</span> This field is required</small></p>
 </form>
 {% endblock %}

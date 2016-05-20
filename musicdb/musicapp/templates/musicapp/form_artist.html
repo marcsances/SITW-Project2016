@@ -7,7 +7,7 @@
     <h1>Edit Artist</h1>
     <table>
         <tr>
-            <td><label for="name">Artist name: </label></td>
+            <td><label for="name">Artist name<span class="mandatory">*</span>: </label></td>
             <td><input type="text" id="id_name" name="name" value="{% if form.name.value %}{{ form.name.value }}{% endif %}"/></td>
         </tr>
         <tr>
@@ -19,12 +19,13 @@
             <td><input type="text" id="id_artistPictureurl" name="artistPictureurl" value="{% if form.artistPictureurl.value %}{{ form.artistPictureurl.value }}{% endif %}" /></td>
         </tr>
         <tr>
-            <td><label for="albumCount">Number of albums: </label></td>
+            <td><label for="albumCount">Number of albums<span class="mandatory">*</span>: </label></td>
             <td><input type="number" id="id_albumCount" name="albumCount" value="{{ form.albumCount.value }}"></input></td>
         </tr>
         <tr>
             <td><input type="submit" value="Submit" class="btn btn-primary" />&nbsp;<input type="button" value="Cancel" class="btn btn-primary" onclick="history.go(-1); return false;" /></p></td>
         </tr>
     </table>
+    <p><small><span class="mandatory">*</span> This field is required</small></p>
 </form>
 {% endblock %}
