@@ -17,8 +17,8 @@ class Artist(models.Model):
         return u"%s" % self.name
         
     def get_absolute_url(self):
-        return reverse('musicapp:artist_detail',kwargs={'pk':self.pk})	
-  
+        return reverse('musicapp:artist_detail',kwargs={'pk':self.pk})
+
 
 class Album(models.Model):
     artist_id = models.ForeignKey(Artist)

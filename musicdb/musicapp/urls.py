@@ -1,8 +1,8 @@
 from models import Artist, Album, Track, Lyrics
 from django.conf.urls import url,include
 from django.contrib import admin
-from django.views.generic import DetailView, ListView
-from views import ArtistDetail, AlbumDetail, TrackDetail, CreateArtist, CreateAlbum
+from django.views.generic import DetailView, ListView, DeleteView
+from views import ArtistDetail, AlbumDetail, TrackDetail, CreateArtist, CreateAlbum, DeleteElement
 from views import CreateTrack, CreateLyrics, AlbumList, TrackList, LyricList, LoginRequiredCheckOwnerUpdateView
 from forms import *
 
@@ -88,5 +88,24 @@ urlpatterns = [
     # Edit lyrics details: /music/artists/#/albums/#/tracks/#/lyrics/#/edit/
     url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/(?P<pkc>\d+)/lyrics/(?P<pk>\d+)/edit/$',
     LoginRequiredCheckOwnerUpdateView.as_view(model=Lyrics,form_class=LyricForm)),
-    
+
+    #Delete artist
+    url(r'^artists/(?P<pk>\d+)/delete/$',DeleteElement.as_view(model=Artist,
+    template_name='musicapp/confirm_delete.html'),name='artist_delete'),
+
+     # Delete album :
+    url(r'^artists/(?P<pka>\d+)/albums/(?P<pk>\d+)/delete/$',DeleteElement.as_view(
+        model=Album, template_name='musicapp/confirm_delete.html'),name='album_delete'),
+
+    # Delete track :
+    url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/(?P<pk>\d+)/delete/$',
+    DeleteElement.as_view(model=Track,template_name='musicapp/confirm_delete.html'),
+    name='track_delete'),
+
+    # Delete lyrics details:
+    url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/(?P<pkc>\d+)/lyrics/(?P<pk>\d+)/delete/$',
+    DeleteElement.as_view(model=Lyrics, template_name= 'musicapp/confirm_delete.html')),
+
+
+
 ]

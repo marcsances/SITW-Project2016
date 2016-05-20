@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import DetailView, CreateView, ListView, UpdateView
+from django.views.generic import DetailView, CreateView, ListView, UpdateView, DeleteView
 from django.contrib.auth.models import User
 from forms import *
 from models import Track, Artist, Album, Lyrics
@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
 from django.utils.decorators import method_decorator
+from django.core.urlresolvers import reverse_lazy, reverse
 
 class LoginRequiredMixin(object):
     @method_decorator(login_required())
@@ -73,7 +74,7 @@ class CreateArtist(LoginRequiredMixin,CreateView):
         pop = form.save(commit=False)
         pop.user = User.objects.get(username=self.request.user)
         pop.save()
-        return HttpResponseRedirect(self.get_success_url())
+        return HttpResponseRedirect("../")
     
 class CreateAlbum(LoginRequiredMixin,CreateView):
     model=Album
@@ -84,7 +85,7 @@ class CreateAlbum(LoginRequiredMixin,CreateView):
         pop = form.save(commit=False)
         pop.user = User.objects.get(username=self.request.user)
         pop.save()
-        return HttpResponseRedirect(self.get_success_url())
+        return HttpResponseRedirect("../")
     
 class CreateTrack(LoginRequiredMixin,CreateView):
     model=Track
@@ -95,7 +96,7 @@ class CreateTrack(LoginRequiredMixin,CreateView):
         pop = form.save(commit=False)
         pop.user = User.objects.get(username=self.request.user)
         pop.save()
-        return HttpResponseRedirect(self.get_success_url())
+        return HttpResponseRedirect("../")
 
 class CreateLyrics(LoginRequiredMixin,CreateView):
     model = Lyrics
@@ -106,4 +107,15 @@ class CreateLyrics(LoginRequiredMixin,CreateView):
         pop = form.save(commit=False)
         pop.user = User.objects.get(username=self.request.user)
         pop.save()
-        return HttpResponseRedirect(self.get_success_url())
+        return HttpResponseRedirect("../")
+
+class DeleteElement(LoginRequiredMixin,CheckOwnerMixin,DeleteView):
+    template_name = 'musicapp/confirm_delete.html'
+    def get_success_url(self):
+        return '../../'
+
+
+
+
+
+
