@@ -67,7 +67,7 @@ class LyricsDetail(DetailView):
     
 class CreateArtist(LoginRequiredMixin,CreateView):
     model=Artist
-    template_name='musicapp/form.html'
+    template_name='musicapp/form_artist.html'
     form_class=ArtistForm
     
     def form_valid(self, form):
@@ -78,7 +78,7 @@ class CreateArtist(LoginRequiredMixin,CreateView):
     
 class CreateAlbum(LoginRequiredMixin,CreateView):
     model=Album
-    template_name='musicapp/form.html'
+    template_name='musicapp/form_album.html'
     form_class=AlbumForm
     
     def form_valid(self, form):
@@ -89,7 +89,7 @@ class CreateAlbum(LoginRequiredMixin,CreateView):
     
 class CreateTrack(LoginRequiredMixin,CreateView):
     model=Track
-    template_name='musicapp/form.html'
+    template_name='musicapp/form_track.html'
     form_class=TrackForm
     
     def form_valid(self, form):
@@ -100,7 +100,7 @@ class CreateTrack(LoginRequiredMixin,CreateView):
 
 class CreateLyrics(LoginRequiredMixin,CreateView):
     model = Lyrics
-    template_name='musicapp/form.html'
+    template_name='musicapp/form_lyrics.html'
     form_class = LyricForm
     
     def form_valid(self, form):

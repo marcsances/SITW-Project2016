@@ -1,0 +1,39 @@
+{% extends "musicapp/base.html" %} {% block content %}
+{% if form.errors %}
+<p>There is an error with the form.</p>
+{% endif %}
+<form method="post" action="">
+    {% csrf_token %}
+    <h1>Edit Track</h1>
+    <table>
+        <script type="text/javascript">
+            var ur = window.location.href;
+            if (ur.substring(ur.length-5,ur.length-1)=="edit") {
+                ur = ur.substring(0,ur.length-6)
+                ur = ur.substring(0,ur.lastIndexOf('/'))
+                ur = ur.substring(0,ur.length-7)
+                ur = ur.substring(ur.lastIndexOf('/')+1)  
+            } else {
+                ur = ur.substring(0,ur.length-15)
+                ur = ur.substring(ur.lastIndexOf('/')+1)
+            }
+            document.write('<input type="hidden" id="id_album_id" name="album_id" value="' + ur + '"/>')
+        </script>
+        <tr>
+            <td><label for="title">Track name: </label></td>
+            <td><input type="text" id="id_title" name="title" value="{% if form.trackLink.value %}{{ form.title.value }}{% endif %}" /></td>
+        </tr>
+        <tr>
+            <td><label for="duration">Duration (seconds): </label></td>
+            <td><input type="number" id="id_duration" name="duration" value="{{ form.duration.value }}" /></td>
+        </tr>
+        <tr>
+            <td><label for="tackLink">Track listen URL: </label></td>
+            <td><input type="text" id="id_trackLink" name="trackLink" value="{% if form.trackLink.value %}{{ form.trackLink.value }}{% endif %}"></input></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit" class="btn btn-primary" />&nbsp;<input type="button" value="Cancel" class="btn btn-primary" onclick="history.go(-1); return false;" /></p></td>
+        </tr>
+    </table>
+</form>
+{% endblock %}

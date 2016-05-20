@@ -2,8 +2,8 @@
 
 <form action="" method="post">{% csrf_token %}
     <p>Are you sure you want to delete "{{ object }}"?</p>
-    <input type="submit" value="Confirm" />
-    <input type="button" value="Cancel" onclick="history.go(-1); return false;" />
+    <input type="submit" class="btn btn-primary" value="Confirm" />
+    <input type="button" class="btn btn-primary" value="Cancel" onclick="history.go(-1); return false;" />
 </form>
 
 {% endblock %}

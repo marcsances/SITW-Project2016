@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container-fluid">
     <h1>
-        Artists
+        <a href="../" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span></a> Artists
         {% if user %}<a href="{% url 'musicapp:artist_create' %}" class="btn btn-info btn-lg">
               <span class="glyphicon glyphicon-plus"></span> Add
             </a>{% endif %}

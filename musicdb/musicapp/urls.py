@@ -62,7 +62,7 @@ urlpatterns = [
     
     # Edit artist details: /music/artists/#/edit/
     url(r'^artists/(?P<pk>\d+)/edit/$',LoginRequiredCheckOwnerUpdateView.as_view(model=Artist, 
-     template_name='musicapp/form.html',form_class=ArtistForm),name='artist_edit'),
+     template_name='musicapp/form_artist.html',form_class=ArtistForm),name='artist_edit'),
      
     # Create a new album: /music/artists/#/albums/create/
     url(r'^artists/(?P<pk>\d+)/albums/create/$',CreateAlbum.as_view(),
@@ -70,7 +70,7 @@ urlpatterns = [
     
     # Edit album details: /music/artists/#/albums/#/edit/
     url(r'^artists/(?P<pka>\d+)/albums/(?P<pk>\d+)/edit/$',LoginRequiredCheckOwnerUpdateView.as_view(
-        model=Album, template_name='musicapp/form.html',form_class=AlbumForm),name='album_edit'),
+        model=Album, template_name='musicapp/form_album.html',form_class=AlbumForm),name='album_edit'),
         
     # Create a new track: /music/artists/#/albums/#/tracks/create/
     url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/create/$',
@@ -78,7 +78,7 @@ urlpatterns = [
     
     # Edit track details: /music/artists/#/albums/#/tracks/#/edit/
     url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/(?P<pk>\d+)/edit/$',
-    LoginRequiredCheckOwnerUpdateView.as_view(model=Track,form_class=TrackForm),
+    LoginRequiredCheckOwnerUpdateView.as_view(model=Track,template_name='musicapp/form_track.html',form_class=TrackForm),
     name='track_edit'),
 
     # Create new lyrics: /music/artists/#/albums/#/tracks/#/lyrics/create/
@@ -87,7 +87,7 @@ urlpatterns = [
 
     # Edit lyrics details: /music/artists/#/albums/#/tracks/#/lyrics/#/edit/
     url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/(?P<pkc>\d+)/lyrics/(?P<pk>\d+)/edit/$',
-    LoginRequiredCheckOwnerUpdateView.as_view(model=Lyrics,form_class=LyricForm)),
+    LoginRequiredCheckOwnerUpdateView.as_view(model=Lyrics,template_name='musicapp/form_lyrics.html',form_class=LyricForm)),
 
     #Delete artist
     url(r'^artists/(?P<pk>\d+)/delete/$',DeleteElement.as_view(model=Artist,
