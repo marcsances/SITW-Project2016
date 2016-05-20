@@ -36,8 +36,28 @@
             <td><input type="text" id="id_albumLink" name="albumLink" value="{% if form.albumLink.value %}{{ form.albumLink.value }}{% endif %}"></input></td>
         </tr>
         <tr>
+            <script type="text/javascript">
+            $(function() {
+                var samplecovers = [
+                    "dimension.jpg",
+                    "equalizer.jpg",
+                    "headphones.png",
+                    "prism.jpg",
+                    "seashore.jpg",
+                    "sunset.jpg"
+                    ];
+                $("#id_albumCoverurl").autocomplete({
+                    select: function (a, b) {
+                        document.getElementById('coverSample').innerHTML = "<img width='300' src='/static/covers/" + b.item.value + "' alt='cover' />"
+                    },
+                    
+                    source: samplecovers
+                });
+            });
+        </script>
             <td><label for="albumCoverurl">Album cover URL: </label></td>
             <td><input type="text" id="id_albumCoverurl" name="albumCoverurl" value="{% if form.albumCoverurl.value %}{{ form.albumCoverurl.value }}{% endif %}"></input></td>
+            <td><div class="coverSample"></div></td>
         </tr>
         <tr>
             <td><input type="submit" value="Submit" class="btn btn-primary" />&nbsp;<input type="button" value="Cancel" class="btn btn-primary" onclick="history.go(-1); return false;" /></p></td>
