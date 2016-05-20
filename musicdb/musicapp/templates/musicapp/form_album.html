@@ -57,7 +57,10 @@
         </script>
             <td><label for="albumCoverurl">Album cover URL: </label></td>
             <td><input type="text" id="id_albumCoverurl" name="albumCoverurl" value="{% if form.albumCoverurl.value %}{{ form.albumCoverurl.value }}{% endif %}"></input></td>
-            <td><div class="coverSample"></div></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><div id="coverSample"></div></td>
         </tr>
         <tr>
             <td><input type="submit" value="Submit" class="btn btn-primary" />&nbsp;<input type="button" value="Cancel" class="btn btn-primary" onclick="history.go(-1); return false;" /></p></td>
