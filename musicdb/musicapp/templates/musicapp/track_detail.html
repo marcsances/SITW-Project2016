@@ -12,6 +12,26 @@
     {% if track.trackLink %}
     <a href="{{ track.trackLink }}">{{ track.title }}</a> {% endif %}
 </p>
-   <p>Duration: {{ track.duration }}</p>
 <p><a href="lyrics/">View lyrics</a></p>
+<h2>Reviews</h2>
+<ul>
+    {% for review in track.trackreview_set.all %}
+        <li>
+            <p>{{review.rating}} star {{review.rating|pluralize}}</p>
+            <p>Created by {{review.user}} on {{review.date}}</p>
+        </li>
+    {%endfor%}
+</ul>
+<h3>Add Review</h3>
+<form action="{% url 'musicapp:review_create' track.album_id.artist_id.id track.album_id.id track.id%}" method="post">
+    {% csrf_token %}
+    <p>Rating:</p>
+    <p>{% for rate in RATING_CHOICES%}
+    <input type="radio" name="rating" id="rating{{forloop.counter}}" value="{{rate.1}}"/>
+    <label for="rating{{forloop.counter}}">{{rate.1}} star{{rate.0|pluralize}}</label>
+    <br/> {% endfor %}
+    </p>
+    <input type="submit" value="Review"/>
+</form>
+
 {% endblock %} {% block footer %}Created by {{ track.user }} on {{ track.date}} {% endblock %}

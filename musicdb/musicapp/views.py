@@ -1,14 +1,15 @@
 from django.shortcuts import render
-from django.views.generic import DetailView, CreateView, ListView, UpdateView, DeleteView
+from django.views.generic import DetailView, CreateView, ListView, UpdateView, DeleteView, RedirectView
 from django.contrib.auth.models import User
 from forms import *
-from models import Track, Artist, Album, Lyrics
+from models import Track, Artist, Album, Lyrics, TrackReview
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required 
 from django.http import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
 from django.utils.decorators import method_decorator
 from django.core.urlresolvers import reverse_lazy, reverse
+
 
 class LoginRequiredMixin(object):
     @method_decorator(login_required())
@@ -60,6 +61,11 @@ class AlbumDetail(DetailView):
 class TrackDetail(DetailView):
     model=Track
     template_name='musicapp/track_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(TrackDetail,self).get_context_data(**kwargs)
+        context['RATING_CHOICES'] = TrackReview.RATING_CHOICES
+        return context
 
 class LyricsDetail(DetailView):
     model=Lyrics
@@ -113,6 +119,17 @@ class DeleteElement(LoginRequiredMixin,CheckOwnerMixin,DeleteView):
     template_name = 'musicapp/confirm_delete.html'
     def get_success_url(self):
         return '../../'
+
+def review(request,pka,pkb,pkc):
+    artist =  get_object_or_404(Artist, pk=pka)
+    album =  get_object_or_404(Album, pk=pkb)
+    track = get_object_or_404(Track, pk=pkc)
+    review = TrackReview(rating= request.POST['rating'],
+                         user = request.user,
+                         track=track)
+    review.save()
+    return HttpResponseRedirect(reverse('musicapp:track_detail', args=( artist.id,album.id, track.id,)))
+
 
 
 

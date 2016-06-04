@@ -58,3 +58,15 @@ class Lyrics(models.Model):
     def get_absolute_url(self):
         return reverse('musicapp:track_lyrics',kwargs={'pk':self.pk,'pka':self.track_id.album_id.pk,
          'pkb':self.track_id.album_id.artist_id.pk,'pkt':self.track_id.pk})
+
+class Review(models.Model):
+    RATING_CHOICES = ((1, 'one'), (2,'two'),(3,'three'),(4,'four'),(5,'five'))
+    rating = models.PositiveSmallIntegerField('Rating', blank=False, default=3, choices=RATING_CHOICES)
+    user= models.ForeignKey(User, default=1)
+    date = models.DateField(default=date.today)
+
+    class Meta:
+        abstract = True
+
+class TrackReview(Review):
+    track = models.ForeignKey(Track)

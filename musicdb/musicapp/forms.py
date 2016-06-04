@@ -13,9 +13,10 @@ class AlbumForm(ModelForm):
 class TrackForm(ModelForm):
     class Meta:
         model = Track
-        exclude = ('user','date')
+        exclude = ('user','date', 'reviews', 'numReviews')
         
 class LyricForm(ModelForm):
     class Meta:
         model = Lyrics
         exclude = ('user','date')
+

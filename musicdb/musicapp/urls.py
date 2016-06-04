@@ -3,7 +3,8 @@ from django.conf.urls import url,include
 from django.contrib import admin
 from django.views.generic import DetailView, ListView, DeleteView
 from views import ArtistDetail, AlbumDetail, TrackDetail, CreateArtist, CreateAlbum, DeleteElement
-from views import CreateTrack, CreateLyrics, AlbumList, TrackList, LyricList, LoginRequiredCheckOwnerUpdateView
+from views import CreateTrack, CreateLyrics, AlbumList, TrackList, LyricList, LoginRequiredCheckOwnerUpdateView, review
+
 from forms import *
 
 urlpatterns = [
@@ -106,6 +107,8 @@ urlpatterns = [
     url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/(?P<pkc>\d+)/lyrics/(?P<pk>\d+)/delete/$',
     DeleteElement.as_view(model=Lyrics, template_name= 'musicapp/confirm_delete.html')),
 
-
-
+    #Create track review:
+    url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/(?P<pkc>\d+)/reviews/create/$',
+    review,
+    name='review_create'),
 ]
