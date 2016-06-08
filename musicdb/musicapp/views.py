@@ -125,6 +125,7 @@ def review(request,pka,pkb,pkc):
     album =  get_object_or_404(Album, pk=pkb)
     track = get_object_or_404(Track, pk=pkc)
     review = TrackReview(rating= request.POST['rating'],
+                         comment = request.POST['comment'],
                          user = request.user,
                          track=track)
     review.save()
