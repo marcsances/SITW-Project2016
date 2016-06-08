@@ -18,8 +18,8 @@
 </p>
 <p><a href="lyrics/">View lyrics</a></p>
 <h2>Reviews</h2>
-{% if track.trackview_set.all|length > 0 %}
-    <span rel="aggregateRating"
+{% if track.trackreview_set.all|length > 0 %}
+    <span rel="aggregateRating">
           <p typof="AggregateRating">
               Average rating
               <span property="ratingValue">{{track.averageRating|stringformat:".1f"}}</span>
@@ -30,15 +30,24 @@
           </p>
     </span>
 <ul rel="review">
-    {% for review in track.trackreview_set.all> %}
+    {% for review in track.trackreview_set.all %}
         <li typeof="Review">
             <p rel="reviewRating" typeof="Rating">
-            <p>{{review.rating}} star{{review.rating|pluralize}}</p>
-            <p>{{review.comment}}</p>
-            <p>Created by {{review.user}} on {{review.date}}</p>
-        </li>
+                <span property="worstRating" content="{{RATING_CHOICES.0.0}}"></span>
+                <span property="ratingValue">{{review.rating}}</span>
+                star{{ review.rating|pluralize }}
+                {% with RATING_CHOICES|last as best %}
+                <span property="bestRating" content="{{best.0}}"></span>
+                {% endwith %}
+            </p>
+            <p property="description">{{review.comment}}</p>
+            <p>Created by <span property="author">{{review.user}}</span> on
+            <span property="publishDate">{{ review.date }}</span></p>
+         </li>
     {%endfor%}
+</ul>
 </span>
+{% endif %}
 <h3>Add Review</h3>
 <form action="{% url 'musicapp:review_create' track.album_id.artist_id.id track.album_id.id track.id%}" method="post">
     {% csrf_token %}
