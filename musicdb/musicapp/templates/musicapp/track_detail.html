@@ -1,6 +1,10 @@
-{% extends "musicapp/base.html" %} {% block content %}
+{% extends "musicapp/base.html" %}
+{% block title %} MusicDB - {{track.title}} {% endblock %}
+{% block content %}
+<span vocab ='http://schema.org/' typeof= "MusicRecording"></span>
 <h1>
-    <a href="../" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span></a> {{ track.title}}
+    <a href="../" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span></a>
+    <span property="name"> {{ track.title}}  </span>
     {% if user == track.user %}
         <a href="edit/"  class="btn btn-info btn-lg">
               <span class="glyphicon glyphicon-edit"></span> Edit</a>
@@ -14,15 +18,27 @@
 </p>
 <p><a href="lyrics/">View lyrics</a></p>
 <h2>Reviews</h2>
-<ul>
-    {% for review in track.trackreview_set.all %}
-        <li>
+{% if track.trackview_set.all|length > 0 %}
+    <span rel="aggregateRating"
+          <p typof="AggregateRating">
+              Average rating
+              <span property="ratingValue">{{track.averageRating|stringformat:".1f"}}</span>
+              {% with track.trackreview_set.all|length as reviewCount %}
+                from <span property="reviewCount"> {{ reviewCount }}
+                </span> review {{ reviewCount|pluralize }}
+              {% endwith %}
+          </p>
+    </span>
+<ul rel="review">
+    {% for review in track.trackreview_set.all> %}
+        <li typeof="Review">
+            <p rel="reviewRating" typeof="Rating">
             <p>{{review.rating}} star{{review.rating|pluralize}}</p>
             <p>{{review.comment}}</p>
             <p>Created by {{review.user}} on {{review.date}}</p>
         </li>
     {%endfor%}
-</ul>
+</span>
 <h3>Add Review</h3>
 <form action="{% url 'musicapp:review_create' track.album_id.artist_id.id track.album_id.id track.id%}" method="post">
     {% csrf_token %}
