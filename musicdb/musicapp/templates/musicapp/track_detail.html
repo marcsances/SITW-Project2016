@@ -48,6 +48,7 @@
 </ul>
 </span>
 {% endif %}
+{% if user %}
 <h3>Add Review</h3>
 <form action="{% url 'musicapp:review_create' track.album_id.artist_id.id track.album_id.id track.id%}" method="post">
     {% csrf_token %}
@@ -60,5 +61,6 @@
     </p>
     <input type="submit" value="Review"/>
 </form>
+{% endif %}
 
 {% endblock %} {% block footer %}Created by {{ track.user }} on {{ track.date}} {% endblock %}
