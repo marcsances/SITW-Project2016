@@ -42,7 +42,11 @@
             </p>
             <p property="description">{{review.comment}}</p>
             <p>Created by <span property="author">{{review.user}}</span> on
-            <span property="publishDate">{{ review.date }}</span></p>
+            <span property="publishDate">{{ review.date }}</span>
+            {% if review.user == user %}
+                <a href="reviews/{{review.id}}/deleterev/"  class="btn btn-info btn-lg">
+                <span class="glyphicon glyphicon-remove"></span> Delete</a>
+            {% endif %}</p>
          </li>
     {%endfor%}
 </ul>

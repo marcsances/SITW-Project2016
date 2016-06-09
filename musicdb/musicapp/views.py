@@ -132,7 +132,10 @@ def review(request,pka,pkb,pkc):
     return HttpResponseRedirect(reverse('musicapp:track_detail', args=( artist.id,album.id, track.id,)))
 
 
-
+class DeleteReview(LoginRequiredMixin,CheckOwnerMixin,DeleteView):
+    template_name = 'musicapp/confirm_delete.html'
+    def get_success_url(self):
+        return '../../../'
 
 
 
