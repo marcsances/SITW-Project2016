@@ -48,7 +48,7 @@
 </ul>
 </span>
 {% endif %}
-{% if user %}
+{% if username %}
 <h3>Add Review</h3>
 <form action="{% url 'musicapp:review_create' track.album_id.artist_id.id track.album_id.id track.id%}" method="post">
     {% csrf_token %}
