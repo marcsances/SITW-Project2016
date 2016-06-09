@@ -2,7 +2,7 @@ from models import Artist, Album, Track, Lyrics, TrackReview
 from django.conf.urls import url,include
 from django.contrib import admin
 from django.views.generic import DetailView, ListView, DeleteView
-from views import ArtistDetail, AlbumDetail, TrackDetail, CreateArtist, CreateAlbum, DeleteElement, DeleteReview
+from views import ArtistDetail, AlbumDetail, TrackDetail, CreateArtist, CreateAlbum, DeleteElement, DeleteReview, ReviewDetail
 from views import CreateTrack, CreateLyrics, AlbumList, TrackList, LyricList, LoginRequiredCheckOwnerUpdateView, review
 
 from forms import *
@@ -111,6 +111,11 @@ urlpatterns = [
     url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/(?P<pkc>\d+)/reviews/create/$',
     review,
     name='review_create'),
+    
+    #View track review:
+    url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/(?P<pkc>\d+)/reviews/(?P<pk>\d+)/$',
+     ReviewDetail.as_view(),
+     name='review_detail'),
 
    # Delete lyrics details:
     url(r'^artists/(?P<pka>\d+)/albums/(?P<pkb>\d+)/tracks/(?P<pkc>\d+)/reviews/(?P<pk>\d+)/deleterev/$',

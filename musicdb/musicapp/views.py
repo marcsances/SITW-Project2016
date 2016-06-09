@@ -67,11 +67,24 @@ class TrackDetail(DetailView):
         context = super(TrackDetail,self).get_context_data(**kwargs)
         context['RATING_CHOICES'] = TrackReview.RATING_CHOICES
         context['RATING_AVG'] = TrackReview.objects.filter(track=self.kwargs['pk']).aggregate(Avg('rating'))['rating__avg']
+        name = Artist.objects.filter(pk=self.kwargs['pka']).values_list('name', flat=True)
+        context['ARTIST_NAME'] = name[0] if len(name)>0 else ""
+        link = Artist.objects.filter(pk=self.kwargs['pka']).values_list('artistLink', flat=True)
+        context['ARTIST_LINK'] = link[0] if len(link)>0 else ""
+        pic = Artist.objects.filter(pk=self.kwargs['pka']).values_list('artistPictureurl', flat=True)
+        context['ARTIST_PIC'] = pic[0] if len(pic)>0 else ""
+        context['ARTIST_PK'] = self.kwargs['pka']
+        context['ARTIST_ALBUMS'] = Album.objects.filter(artist_id=self.kwargs['pka'])
+        context['ALBUM_PK'] = self.kwargs['pkb']
         return context
 
 class LyricsDetail(DetailView):
     model=Lyrics
     template_name = 'musicapp/track_lyrics.html'
+    
+class ReviewDetail(DetailView):
+    model=TrackReview
+    template_name = 'musicapp/review.html'    
     
 class CreateArtist(LoginRequiredMixin,CreateView):
     model=Artist

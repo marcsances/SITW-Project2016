@@ -10,32 +10,75 @@
               <span class="glyphicon glyphicon-remove"></span> Delete</a>
     {% endif %}
     <span property="author" content="{{track.user}}"></span>
-    <span property="datePublished" content="{{track.date}}"></span>
+    <span property="dateCreated" content="{{track.date}}"></span>
+    
     </h1>
     <p>
 
         {% if track.trackLink %}
         <a href="{{ track.trackLink }}">{{ track.title }}</a> {% endif %}
     </p>
+    <div property="byArtist" typeof="MusicGroup" resource='http://{{request.META.HTTP_HOST}}/music/artists/{{ARTIST_PK}}/'>
+        <span property="name" datatype="xsd:string" content="Linkin Park"></span>
+        By <span resource="http://{{request.META.HTTP_HOST}}/music/artists/{{ARTIST_PK}}/"></span>
+        {% if ARTIST_LINK %}
+        <span property="url" content="{{ ARTIST_LINK }}" />
+        {% endif %}
+           <a href="http://{{request.META.HTTP_HOST}}/music/artists/{{ARTIST_PK}}/" >{{ ARTIST_NAME }}</a> 
+        <div class="hoverbox">
+        {% if ARTIST_PIC %}
+        <a style="text-decoration: none" href="{{ ARTIST_PIC }}" property="image">
+            <img src="{{ ARTIST_PIC }}" style="width: 64px; height: 64px" alt="{{ ARTIST_NAME }}" />
+        </a>
+        {% endif %}
+        <b><a href="http://{{request.META.HTTP_HOST}}/music/artists/{{ARTIST_PK}}/" >{{ ARTIST_NAME }}</a> </b>
+        <br/>
+        <hr />
+        <p><b>Albums:</b></p>
+        <ul style="list-style-type: none">
+        {% for album in ARTIST_ALBUMS %}
+            <li>
+                    <a property="album" typeof="MusicAlbum" href="http://{{request.META.HTTP_HOST}}/music/artists/{{ARTIST_PK}}/albums/{{album.pk}}/" style="text-decoration: none">
+                    {% if album.albumCoverurl %}
+                    <span property="image" href="{{ album.albumCoverurl }}">
+                    <img src="{{ album.albumCoverurl }}" height="32" width="32" 
+                    onError="this.onerror=function(){this.src='/static/covers/equalizer.jpg'}; 
+                    this.src='/static/covers/{{ album.albumCoverurl }}'" alt="{{album}}"/>
+                    </span>
+                    {% else %}
+                    <img src="/static/covers/{{ album.albumCoverurl }}" alt="{{ album }}" />
+                    {% endif %}
+                    
+                    <span property="name">{{ album }}</span>
+                    </a>
+            </li>
+        {% endfor %}
+        </ul>
+        </div>
+    </div>
     <p><a href="lyrics/">View lyrics</a></p>
     <h2>Reviews</h2> {% if track.trackreview_set.all|length > 0 %}
     <span rel="aggregateRating">
           <p typeof="AggregateRating">
               Average rating
               <span property="ratingValue">{{RATING_AVG}}</span> 
-              {% with track.trackreview_set.all|length as reviewCount %} from <span property="reviewCount"> {{ reviewCount }}
+              {% with track.trackreview_set.all|length as reviewCount %} 
+              from <span property="reviewCount"> {{ reviewCount }}
                 </span> review{{ reviewCount|pluralize }} {% endwith %}
     </p>
     </span>
     <ul rel="review">
         {% for review in track.trackreview_set.all %}
-        <li typeof="Review">
-            <p rel="reviewRating" typeof="Rating">
+        
+        <li typeof="Review" resource="http://{{request.META.HTTP_HOST}}/music/artists/{{ARTIST_PK}}/albums/{{ALBUM_PK}}/tracks/{{track.pk}}/reviews/{{review.id}}/">
+            <span rel="reviewRating" typeof="Rating">
                 <span property="worstRating" content="{{RATING_CHOICES.0.0}}"></span>
                 <span property="ratingValue">{{review.rating}}</span> star{{ review.rating|pluralize }} 
                 {% with RATING_CHOICES|last as best %}
                 <span property="bestRating" content="{{best.0}}"></span> {% endwith %}
-            </p>
+            </span>
+            <a href="http://{{request.META.HTTP_HOST}}/music/artists/{{ARTIST_PK}}/albums/{{ALBUM_PK}}/tracks/{{track.pk}}/reviews/{{review.id}}/">
+            <span class="glyphicon glyphicon-link"></span></a>
             <p property="description">{{review.comment}}</p>
             <p>Created by <span property="author">{{review.user}}</span> on
                 <span property="datePublished">{{ review.date }}</span> {% if review.user == user %}
@@ -48,10 +91,10 @@
 </div>
 {% endif %} {% if user %}
 <h3>Add Review</h3>
-<form action="{% url 'musicapp:review_create' track.album_id.artist_id.id track.album_id.id track.id%}" 
-method="post">
-    {% csrf_token %} Comments: <textarea name="comment" id="comment" rows="4"></textarea>
-    <p>Rating:</p>
+<form action="{% url 'musicapp:review_create' track.album_id.artist_id.id track.album_id.id track.id%}" method="post">
+    {% csrf_token %} <label for="comment">Comments:</label>
+    <br/> <textarea name="comment" id="comment" rows="4"></textarea>
+    <p><label>Rating:</label></p>
     <p>{% for rate in RATING_CHOICES%}
         <input type="radio" name="rating" id="rating{{forloop.counter}}" value="{{rate.0}}" />
         <label for="choice{{forloop.counter}}">{{rate.1}} star{{rate.0|pluralize}}</label>
@@ -60,5 +103,4 @@ method="post">
     <input type="submit" value="Review" />
 </form>
 
-{% endif %} {% endblock %} {% block footer %}Created by {{ track.user }} on 
-{{ track.date}}{% endblock %}
+{% endif %} {% endblock %} {% block footer %}Created by {{ track.user }} on {{ track.date}}{% endblock %}

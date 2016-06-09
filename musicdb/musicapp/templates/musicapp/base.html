@@ -14,6 +14,23 @@
         .mandatory {
             color: #ff0000;
         }
+        .hoverbox {
+            display:none;
+            position: absolute;
+            top: 150x; 
+            left: 30px;
+            padding: 5px;
+            border: 1px solid black;
+            background-color: #fff;
+            z-index: 300;
+        }
+        a:hover + .hoverbox {
+            display: block;
+        }
+        
+        .hoverbox:hover {
+            display: block;
+        }
     -->
     </style>
     <script src="{% static "js/jquery-2.2.3.min.js" %}"></script>
