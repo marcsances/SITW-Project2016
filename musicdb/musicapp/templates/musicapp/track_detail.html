@@ -16,7 +16,7 @@
     <p>
 
         {% if track.trackLink %}
-        <a href="{{ track.trackLink }}">{{ track.title }}</a> {% endif %}
+        <a property="url" href="{{ track.trackLink }}">{{ track.title }}</a> {% endif %}
     </p>
     <div property="byArtist" typeof="MusicGroup" resource='http://{{request.META.HTTP_HOST}}/music/artists/{{ARTIST_PK}}/'>
         <span property="name" datatype="xsd:string" content="Linkin Park"></span>
