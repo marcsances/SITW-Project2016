@@ -1,7 +1,7 @@
 {% extends "musicapp/base.html" %}
 {% block title %} MusicDB - {{track.title}} {% endblock %}
 {% block content %}
-<div vocab ='http://schema.org/' typeof= "MusicRecording">
+<div vocab ='http://schema.org/' resource='http://{{request.META.HTTP_HOST}}{{request.path}}' typeof= "MusicRecording">
 <h1>
     <a href="../" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span></a>
     <span property="name"> {{ track.title}}  </span>
@@ -13,6 +13,7 @@
     {% endif %}
 </h1>
 <p>
+    
     {% if track.trackLink %}
     <a href="{{ track.trackLink }}">{{ track.title }}</a> {% endif %}
 </p>
@@ -20,7 +21,7 @@
 <h2>Reviews</h2>
 {% if track.trackreview_set.all|length > 0 %}
     <span rel="aggregateRating">
-          <p typof="AggregateRating">
+          <p typeof="AggregateRating">
               Average rating
               <span property="ratingValue">{{RATING_AVG}}</span>
               {% with track.trackreview_set.all|length as reviewCount %}
@@ -48,15 +49,15 @@
                 <span class="glyphicon glyphicon-remove"></span> Delete</a>
             {% endif %}</p>
          </li>
-    {%endfor%}
+    {% endfor %}
 </ul>
-</span>
+</div>
 {% endif %}
 {% if user %}
 <h3>Add Review</h3>
 <form action="{% url 'musicapp:review_create' track.album_id.artist_id.id track.album_id.id track.id%}" method="post">
     {% csrf_token %}
-    Message: <textarea name="comment" id = "comment" rows = "4"></textarea>
+    Comments: <textarea name="comment" id = "comment" rows = "4"></textarea>
     <p>Rating:</p>
     <p>{% for rate in RATING_CHOICES%}
     <input type="radio" name="rating" id="rating{{forloop.counter}}" value="{{rate.0}}"/>
@@ -65,7 +66,7 @@
     </p>
     <input type="submit" value="Review"/>
 </form>
-</div>
+
 {% endif %}
 
 {% endblock %} {% block footer %}Created by {{ track.user }} on {{ track.date}} {% endblock %}
