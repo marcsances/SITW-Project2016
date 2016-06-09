@@ -22,10 +22,10 @@
     <span rel="aggregateRating">
           <p typof="AggregateRating">
               Average rating
-              <span property="ratingValue">{{track.averageRating|stringformat:".1f"}}</span>
+              <span property="ratingValue">{{RATING_AVG}}</span>
               {% with track.trackreview_set.all|length as reviewCount %}
                 from <span property="reviewCount"> {{ reviewCount }}
-                </span> review {{ reviewCount|pluralize }}
+                </span> review{{ reviewCount|pluralize }}
               {% endwith %}
           </p>
     </span>

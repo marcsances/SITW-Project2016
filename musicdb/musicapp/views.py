@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.views.generic import DetailView, CreateView, ListView, UpdateView, DeleteView, RedirectView
 from django.contrib.auth.models import User
+from django.db.models import Avg
 from forms import *
-from models import Track, Artist, Album, Lyrics, TrackReview
+from models import Track, Artist, Album, Lyrics, TrackReview, Review
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required 
 from django.http import HttpResponseRedirect
@@ -65,6 +66,7 @@ class TrackDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(TrackDetail,self).get_context_data(**kwargs)
         context['RATING_CHOICES'] = TrackReview.RATING_CHOICES
+        context['RATING_AVG'] = TrackReview.objects.filter(track=self.kwargs['pk']).aggregate(Avg('rating'))['rating__avg']
         return context
 
 class LyricsDetail(DetailView):
